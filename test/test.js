@@ -32,7 +32,7 @@ new Promise(function(resolve, reject) {
 })
 .then(function() {
     //return sdk.transferTokens(keypair1, keypair2.publicKey(), token_id, 10, defaultResolve, defaultReject);
-    return sdk.destroyTokens(token_id, defaultResolve, defaultReject);
+    return sdk.destroyTokens(keypair1, token_id, defaultResolve, defaultReject);
 })
 .catch(function(error) {
     console.log(error);

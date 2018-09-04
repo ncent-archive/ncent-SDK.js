@@ -48,10 +48,11 @@ class ncentSDK {
         const msg = dec(message);
         const signed = nacl.sign.detached(msg, sponsor_private);
         axios.put(this._net+ '/tokentypes/' + tokentype_id, {
-            signed: JSON.stringify(Array.from(signed))
+            signed: JSON.stringify(Array.from(signed)),
+            publicKey: sponsor_KeyPair.publicKey()
         })
         .then(function(response) {
-            //console.log(response.data);
+            //console.log(response.data);c
             return resolve(response);
         })
         .catch(function(error) {
