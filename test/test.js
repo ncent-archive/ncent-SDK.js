@@ -1,6 +1,5 @@
 /*
     Runs certain tests to test ncentSDK.
-
 */
 //var sdk = require('./ncentSDK.js');
 const mySDK = require('../source/ncentSDK.js');
@@ -28,7 +27,7 @@ new Promise(function(resolve, reject) {
     return sdk.stampToken(keypair1.publicKey(), 'jobCent', 1000000, '2021', resolve, reject);
 })
 .then(function(response) {
-    token_id = response.data["token"]["uuid"];	
+    token_id = response.data["token"]["uuid"];
 })
 .then(function() {
     //return sdk.transferTokens(keypair1, keypair2.publicKey(), token_id, 10, defaultResolve, defaultReject);

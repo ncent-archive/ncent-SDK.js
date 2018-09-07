@@ -22,7 +22,7 @@ In our initial version, we will provide support for:
  * [getTokenBalance](#gettokenbalance)
  * [destroyTokens](#destroytokens)
  * [stampToken](#stamptoken)
- 
+
  In our next version, there will be support for
  - getAllTransactionHistory
  - getTokenTransactionHistory
@@ -34,12 +34,12 @@ In our initial version, we will provide support for:
 ### To use as a module in a Node.js project
 1. Install it using npm:
   ```shell
-  npm i ncent-sdk-public
+  npm i ncent-sandbox-sdk
   ```
 
 2. require/import it in your JavaScript:
   ```js
-  const nCentSDK = require('ncent-sdk-public');
+  const nCentSDK = require('ncent-sandbox-sdk');
   ```
 
 In the event the above does not work, please contact us to get help resolving your issue.
@@ -50,12 +50,12 @@ In the event the above does not work, please contact us to get help resolving yo
 1. Clone the repo:
 
   ```shell
-  git clone https://github.com/ncent/ncent.github.io/
+  git clone https://github.com/ncent/ncent-SDK.js
   ```
 
 2. Install dependencies inside our ncentSDK folder:
   ```shell
-  cd SDK
+  cd ncent-SDK.js
   npm install
   ```
 
@@ -97,7 +97,7 @@ ip_address | String | Network on which to connect to the API. If running locally
 ### `createWalletAddress`
 ##### `createWalletAddress()`
 ### Description:
-Create a KeyPair object. 
+Create a KeyPair object.
 ### Parameters:
 None
 ### Returns:
@@ -162,7 +162,7 @@ reject | callback | Function called on error
 ### `destroyTokens`
 ##### `destroyTokens(tokentype_id, resolve, reject)`
 ### Description:
-"Removes" all tokens of a given type from circulation. 
+"Removes" all tokens of a given type from circulation.
 Note: For development version of the SDK, sets expiration date of these tokens to the current time, which effectively makes them useless, but we still allow transfer and posession of expired tokens.
 ### Parameters:
 Name  | Type | Description
@@ -179,7 +179,7 @@ reject | callback | Function called on error
 ### `stampToken`
 ##### `stampToken(walletAddress, tokenName, numTokens, ExpiryDate, resolve, reject)`
 ### Description:
-Add numTokens of a new token type to a given wallet address. Response object contains the unique tokenType Id which is necessary to know for other SDK functions. 
+Add numTokens of a new token type to a given wallet address. Response object contains the unique tokenType Id which is necessary to know for other SDK functions.
 Note: For development, one can stamp tokens out of nothing, and thus stampTokens can be used to instantiate new ncnt tokens in a completely new  development environment. In the production version of our SDK, only existant ncnt will be allowed to be stamped into new tokens.
 ### Parameters:
 Name  | Type | Description
@@ -198,10 +198,10 @@ reject | callback | Function called on error
 ## Usage
 ``` javascript
 // Import the SDK
-const mySDK = require('ncent-sdk-public');
+const mySDK = require('ncent-sandbox-sdk');
 
 // Create a new instance, using a local instance of the API
-sdk = new mySDK('http://localhost:8010/api');
+sdk = new mySDK();
 
 // Define default callback functions
 function defaultResolve(response) {
@@ -228,7 +228,7 @@ new Promise(function(resolve, reject) {
 })
 .then(function(response) {
     console.log(response.data);
-    token_id = response.data["token"]["uuid"];	
+    token_id = response.data["token"]["uuid"];
 })
 .then(function() {
     return sdk.transferTokens(keypair1, keypair2.publicKey(), token_id, 10, defaultResolve, defaultReject);
