@@ -201,7 +201,7 @@ reject | callback | Function called on error
 const mySDK = require('ncent-sandbox-sdk');
 
 // Create a new instance, using a local instance of the API
-sdk = new mySDK();
+const sdk = new mySDK();
 
 // Define default callback functions
 function defaultResolve(response) {

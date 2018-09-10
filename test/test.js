@@ -18,7 +18,7 @@ let tokenId;
 new Promise((resolve, reject) => {
     return sdk.stampToken(
       keypair1.publicKey(),
-      'jobCentt',
+      'testCent',
       1000000,
       '2021',
       resolve,
@@ -32,6 +32,11 @@ new Promise((resolve, reject) => {
     return sdk.transferTokens(
       keypair1, keypair2.publicKey(), tokenId, 10, defaultResolve, defaultReject
     );
+})
+.then(() => {
+  return sdk.destroyTokens(
+    keypair1, tokenId, defaultResolve, defaultReject
+  );
 })
 .catch((error) => {
     console.log(error);
