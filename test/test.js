@@ -1,11 +1,6 @@
-/*
-    Runs certain tests to test ncentSDK.
-*/
-//var sdk = require('./ncentSDK.js');
 const mySDK = require('../source/ncentSDK.js');
 
-sdk = new mySDK();
-// import ncentSDK from ncentSDK.js;
+const sdk = new mySDK('http://18.219.87.29:8010/api');
 
 function defaultResolve(response) {
     console.log(response.data);
@@ -16,23 +11,28 @@ function defaultReject(error) {
 
 const keypair1 = sdk.createWalletAddress();
 const keypair2 = sdk.createWalletAddress();
-const keypair3 = sdk.createWalletAddress();
-//keypair1._secretSeed = keypair3._secretSeed;
-//keypair1._secretKey = keypair3._secretKey;
-console.log(keypair1);
-console.log(keypair2);
-let token_id;
+console.log(keypair1, keypair2);
 
-new Promise(function(resolve, reject) {
-    return sdk.stampToken(keypair1.publicKey(), 'jobCent', 1000000, '2021', resolve, reject);
+let tokenId;
+
+new Promise((resolve, reject) => {
+    return sdk.stampToken(
+      keypair1.publicKey(),
+      'jobCentt',
+      1000000,
+      '2021',
+      resolve,
+      reject
+    );
 })
-.then(function(response) {
-    token_id = response.data["token"]["uuid"];
+.then((response) => {
+    tokenId = response.data["token"]["uuid"];
 })
-.then(function() {
-    //return sdk.transferTokens(keypair1, keypair2.publicKey(), token_id, 10, defaultResolve, defaultReject);
-    return sdk.destroyTokens(keypair1, token_id, defaultResolve, defaultReject);
+.then(() => {
+    return sdk.transferTokens(
+      keypair1, keypair2.publicKey(), tokenId, 10, defaultResolve, defaultReject
+    );
 })
-.catch(function(error) {
+.catch((error) => {
     console.log(error);
-})
+});

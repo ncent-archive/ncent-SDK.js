@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ncent/ncent.github.io.git"
+    "url": "https://github.com/ncent/ncent-SDK.js.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "nCent",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
@@ -24,9 +24,6 @@
     "user": "0.0.0",
     "webpack": "^4.15.1"
   },
-  "devDependencies": {
-    "nodemon": "^1.17.5",
-    "sequelize-cli": "^4.0.0"
-  },
-  "homepage": "https://github.com/ncent/ncent.github.io"
+  "devDependencies": {},
+  "homepage": "https://github.com/ncent/ncent-SDK.js.git"
 }

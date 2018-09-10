@@ -5,8 +5,8 @@ const signObject = require('./utils').signObject;
 const testNet = 'http://localhost:8010/api';
 
 class ncentSDK {
-    constructor () {
-        this._net = testNet;
+    constructor(net = testNet) {
+        this._net = net;
     }
 
     /*
@@ -31,7 +31,7 @@ class ncentSDK {
         const signed = signObject(messageObj, sponsorPrivate);
 
         axios.put(this._net+ '/tokentypes/' + tokentypeId, {
-            signed: JSON.stringify(Array.from(signed)),
+            signed,
             publicKey: sponsorKeyPair.publicKey()
         })
         .then((response) => {
@@ -88,7 +88,7 @@ class ncentSDK {
             amount: tokenAmount,
             fromAddress: senderKeyPair.publicKey(),
             toAddress: receiverPublic,
-            signed: JSON.stringify(Array.from(signed))
+            signed
         })
         .then((response) => {
             return resolve(response);
