@@ -107,7 +107,7 @@ A Keypair object similar to the [Stellar Keypair object](https://stellar.github.
 - - - -
 
 ### `transferTokens`
-##### `transferTokens(sender_KeyPair, receiver_public, tokentype_id, tokenAmount, resolve, reject)`
+##### `transferTokens(sender_KeyPair, receiver_public, tokentype_id, tokenAmount)`
 ### Description:
 Transfer tokens of a specific type from one wallet to another.
 ### Parameters:
@@ -124,7 +124,7 @@ tokenAmount | int | Integer representing the number of tokens to be transfered
 - - - -
 
 ### `getAllBalances`
-##### `getAllBalances(walletAddress, resolve, reject)`
+##### `getAllBalances(walletAddress)`
 ### Description:
 Retrieve all token balances for a specific wallet address.
 ### Parameters:
@@ -138,7 +138,7 @@ walletAddress | String | Valid wallet public key
 - - - -
 
 ### `getTokenBalance`
-##### `getTokenBalance(walletAddress, tokentype_id, resolve, reject)`
+##### `getTokenBalance(walletAddress, tokentype_id)`
 ### Description:
 Retrieve all token balances for a specific wallet address.
 ### Parameters:
@@ -152,7 +152,7 @@ walletAddress | String | Valid wallet public key
 - - - -
 
 ### `stampToken`
-##### `stampToken(walletAddress, tokenName, numTokens, ExpiryDate, resolve, reject)`
+##### `stampToken(walletAddress, tokenName, numTokens, ExpiryDate)`
 ### Description:
 Add numTokens of a new token type to a given wallet address. Response object contains the unique tokenType Id which is necessary to know for other SDK functions.
 Note: For development, one can stamp tokens out of nothing, and thus stampTokens can be used to instantiate new ncnt tokens in a completely new  development environment. In the production version of our SDK, only existant ncnt will be allowed to be stamped into new tokens.
