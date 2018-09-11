@@ -178,46 +178,42 @@ reject | callback | Function called on error
 
 ## Usage
 ``` javascript
-// Import the SDK
 const mySDK = require('ncent-sandbox-sdk');
 
-// Create a new instance, using a local instance of the API
 const sdk = new mySDK();
 
-// Define default callback functions
-function defaultResolve(response) {
-    console.log(response.data);
-}
+const TOKEN_NAME = 'TokenName'; // MUST BE UNIQUE
+const TOKEN_COUNT = 10000;
+const EXPIRATION_YEAR = '2021';
+const TRANSFER_AMOUNT = 100;
 
-function defaultReject(error) {
-    console.log(error.data);
-}
+const demo = async () => {
+  try {
+    const keypair1 = sdk.createWalletAddress();
+    const keypair2 = sdk.createWalletAddress();
+    const stampRet = await sdk.stampToken(
+      keypair1.publicKey(),
+      TOKEN_NAME,
+      TOKEN_COUNT,
+      EXPIRATION_YEAR,
+    );
+    const tokenId = stampRet.data['token']['uuid'];
+    const transferRet = await sdk.transferTokens(
+      keypair1,
+      keypair2.publicKey(),
+      tokenId,
+      TRANSFER_AMOUNT,
+    );
+    const txn = transferRet.data['txn'];
+    console.log(`${tokenId}\n`, txn);
+  } catch (error) {
+    error.response.data.errors.forEach((error)=>{
+      console.log(error.message);
+    })
+  }
+};
 
-// generate keypairs
-const keypair1 = sdk.createWalletAddress();
-const keypair2 = sdk.createWalletAddress();
-
-
-let token_id;
-
-// For your first async SDK call, wrap it in a promise.
-// Then, you can chain other async calls
-//
-// In this example, we initialize some tokens with stampToken,
-// retrieve the token_id, and transfer tokens between wallets.
-new Promise(function(resolve, reject) {
-    return sdk.stampToken(keypair1.publicKey(), 'jobCent', 1000000, '2021', resolve, reject);
-})
-.then(function(response) {
-    console.log(response.data);
-    token_id = response.data["token"]["uuid"];
-})
-.then(function() {
-    return sdk.transferTokens(keypair1, keypair2.publicKey(), token_id, 10, defaultResolve, defaultReject);
-})
-.catch(function(error) {
-    console.log(error);
-})
+demo();
 ```
 
 ## Contributing

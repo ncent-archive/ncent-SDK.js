@@ -5,10 +5,12 @@ function dec(stringifiedObject) {
     let buffer = Buffer.from(stringifiedObject, 'base64');
     return new Uint8Array(Array.prototype.slice.call(buffer, 0));
   } else {
-    const d = atob(stringifiedObject);
-    const b = new Uint8Array(d.length);
-    for (var i = 0; i < d.length; i++) b[i] = d.charCodeAt(i);
-    return b;
+    const decodedB64 = atob(stringifiedObject);
+    const arr = new Uint8Array(decodedB64.length);
+    for (let i = 0; i < decodedB64.length; i++) {
+      arr[i] = decodedB64.charCodeAt(i);
+    }
+    return arr;
   }
 }
 
@@ -19,4 +21,4 @@ function signObject(messageObject, secretKey) {
   return JSON.stringify(Array.from(signed));
 }
 
-module.exports = { signObject };
+module.exports = { dec, signObject };
