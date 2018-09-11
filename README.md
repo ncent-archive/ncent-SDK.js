@@ -20,7 +20,6 @@ In our initial version, we will provide support for:
  * [transferTokens](#transfertokens)
  * [getAllBalances](#getallbalances)
  * [getTokenBalance](#gettokenbalance)
- * [destroyTokens](#destroytokens)
  * [stampToken](#stamptoken)
 
  In our next version, there will be support for
@@ -85,7 +84,6 @@ ip_address | String | Network on which to connect to the API. If running locally
  * [transferTokens](#transfertokens)
  * [getAllBalances](#getallbalances)
  * [getTokenBalance](#gettokenbalance)
- * [destroyTokens](#destroytokens)
  * [stampToken](#stamptoken)
 
 <br />
@@ -151,23 +149,6 @@ Retrieve all token balances for a specific wallet address.
 Name  | Type | Description
 --- | --- | ---
 walletAddress | String | Valid wallet public key
-resolve | callback | Function called on success
-reject | callback | Function called on error
-
-- - - -
-<br />
-
-- - - -
-
-### `destroyTokens`
-##### `destroyTokens(tokentype_id, resolve, reject)`
-### Description:
-"Removes" all tokens of a given type from circulation.
-Note: For development version of the SDK, sets expiration date of these tokens to the current time, which effectively makes them useless, but we still allow transfer and posession of expired tokens.
-### Parameters:
-Name  | Type | Description
---- | --- | ---
-tokentype_id | String | Valid id of a given token type.
 resolve | callback | Function called on success
 reject | callback | Function called on error
 

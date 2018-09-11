@@ -19,30 +19,6 @@ class ncentSDK {
     }
 
     /*
-    destroyTokens destroys all tokens of a certain tokenType.
-    (stellarKeyPair) sponsorKeyPair: User's wallet with secretKey and public key
-    (string) tokentypeId: The uuid associated the the token you want to destroy.
-    (callback) resolve: invoked on success;
-    (callback) reject: invoked on error;
-    */
-    destroyTokens(sponsorKeyPair, tokentypeId, resolve, reject) {
-        const sponsorPrivate = sponsorKeyPair._secretKey;
-        const messageObj = {tokentype_id: tokentypeId};
-        const signed = signObject(messageObj, sponsorPrivate);
-
-        axios.put(this._net+ '/tokentypes/' + tokentypeId, {
-            signed,
-            publicKey: sponsorKeyPair.publicKey()
-        })
-        .then((response) => {
-            return resolve(response);
-        })
-        .catch((error) => {
-            return reject(error);
-        });
-    }
-
-    /*
     stampToken initiates a new token type and creates n of these tokens.
     (string) publicKey: publicKey of wallet stamping token
     (string) tokenName: Name of token the user wants to create.
@@ -83,7 +59,6 @@ class ncentSDK {
           amount: tokenAmount
         };
         const signed = signObject(messageObj, senderPrivate);
-
         axios.post(this._net + '/tokentypes/' + tokentypeId + '/items', {
             amount: tokenAmount,
             fromAddress: senderKeyPair.publicKey(),
@@ -204,6 +179,29 @@ class ncentSDK {
     //        .catch(function(error){
     //            console.log(error);
     //        });
+    // }
+    /*
+    destroyTokens destroys all tokens of a certain tokenType.
+    (stellarKeyPair) sponsorKeyPair: User's wallet with secretKey and public key
+    (string) tokentypeId: The uuid associated the the token you want to destroy.
+    (callback) resolve: invoked on success;
+    (callback) reject: invoked on error;
+    */
+    // destroyTokens(sponsorKeyPair, tokentypeId, resolve, reject) {
+    //     const sponsorPrivate = sponsorKeyPair._secretKey;
+    //     const messageObj = {tokentype_id: tokentypeId};
+    //     const signed = signObject(messageObj, sponsorPrivate);
+    //
+    //     axios.put(this._net+ '/tokentypes/' + tokentypeId, {
+    //         signed,
+    //         publicKey: sponsorKeyPair.publicKey()
+    //     })
+    //     .then((response) => {
+    //         return resolve(response);
+    //     })
+    //     .catch((error) => {
+    //         return reject(error);
+    //     });
     // }
 
 }
