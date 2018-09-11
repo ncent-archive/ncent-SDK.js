@@ -188,6 +188,7 @@ const sdk = new mySDK();
 function defaultResolve(response) {
     console.log(response.data);
 }
+
 function defaultReject(error) {
     console.log(error.data);
 }
