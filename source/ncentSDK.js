@@ -2,10 +2,11 @@ const axios = require('axios');
 const StellarSdk = require('stellar-sdk');
 const signObject = require('./utils').signObject;
 
-const testNet = 'http://localhost:8010/api';
+// const defaultNet = 'http://localhost:8010/api';
+const defaultNet = 'http://18.219.87.29:8010/api';
 
 class ncentSDK {
-    constructor(net = testNet) {
+    constructor(net = defaultNet) {
         this._net = net;
     }
 

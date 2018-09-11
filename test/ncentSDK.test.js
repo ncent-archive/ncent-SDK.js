@@ -2,7 +2,7 @@
 Object.setPrototypeOf(global.Buffer.prototype, global.Uint8Array.prototype);
 
 const mySDK = require('../source/ncentSDK.js');
-const sdk = new mySDK('http://18.219.87.29:8010/api');
+const sdk = new mySDK();
 const INIT_WALLET_BALANCE = 10000;
 const TRANSFER_AMOUNT = 10;
 

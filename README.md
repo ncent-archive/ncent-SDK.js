@@ -66,11 +66,11 @@ In the event the above does not work, please contact us to get help resolving yo
 #### `new ncentSDK(ip_address)`
 
 ### Description:
-Create an instance of the nCent SDK class, specifying the location API with which you will communicate.  
+Create an instance of the nCent SDK class, specifying the IP of the Sandbox instance with which you will communicate.  
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
-ip_address | String | Network on which to connect to the API. If running locally use ajsdlf, to connect to the server nCent is running, use ajsdf;aksjdf
+ip_address | String | Network on which to connect to the API. This defaults to the IP of the Sandbox hosted on AWS. If you are running the sandbox locally, pass `http://localhost:8010/api`
 
 <br />
 
