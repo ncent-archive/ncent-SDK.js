@@ -117,8 +117,6 @@ sender_KeyPair | Keypair Object | A Stellar KeyPair object with a valid public/p
 receiver_public | String | The public key of the receiver. A valid Base32 Stellar private key. Eg: receiver_keypair.publicKey()
 tokentype_id | String | id representing the Stamped TokenType to be transfered
 tokenAmount | int | Integer representing the number of tokens to be transfered
-resolve | callback | Function called on success
-reject | callback | Function called on error
 
 - - - -
 <br />
@@ -133,8 +131,6 @@ Retrieve all token balances for a specific wallet address.
 Name  | Type | Description
 --- | --- | ---
 walletAddress | String | Valid wallet public key
-resolve | callback | Function called on success
-reject | callback | Function called on error
 
 - - - -
 <br />
@@ -149,8 +145,6 @@ Retrieve all token balances for a specific wallet address.
 Name  | Type | Description
 --- | --- | ---
 walletAddress | String | Valid wallet public key
-resolve | callback | Function called on success
-reject | callback | Function called on error
 
 - - - -
 <br />
@@ -167,9 +161,7 @@ Name  | Type | Description
 --- | --- | ---
 walletAddress | String | Valid public key / wallet identifier to which the new stamped tokens will be added
 tokenName | String | Name of the newly stamped tokens.
-numTokens | int | Integer representing the number of tokens that will be stamped into existance
-resolve | callback | Function called on success
-reject | callback | Function called on error
+numTokens | int | Integer representing the number of tokens that will be stamped into existence
 
 - - - -
 <br />
@@ -178,9 +170,9 @@ reject | callback | Function called on error
 
 ## Usage
 ``` javascript
-const mySDK = require('ncent-sandbox-sdk');
+const nCentSDK = require('ncent-sandbox-sdk');
 
-const sdk = new mySDK();
+const sdk = new nCentSDK();
 
 const TOKEN_NAME = 'TokenName'; // MUST BE UNIQUE
 const TOKEN_COUNT = 10000;

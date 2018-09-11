@@ -1,5 +1,5 @@
-const mySDK = require('../../source/ncentSDK.js');
-const sdk = new mySDK();
+const nCentSDK = require('../../source/ncentSDK.js');
+const sdk = new nCentSDK();
 
 const INIT_WALLET_BALANCE = 10000;
 const TRANSFER_AMOUNT = 10;

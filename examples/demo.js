@@ -1,6 +1,6 @@
-const mySDK = require('ncent-sandbox-sdk');
+const nCentSDK = require('ncent-sandbox-sdk');
 
-const sdk = new mySDK();
+const sdk = new nCentSDK();
 
 const TOKEN_NAME = 'Tokename'; // MUST BE UNIQUE
 const TOKEN_COUNT = 10000;
