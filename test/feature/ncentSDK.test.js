@@ -1,5 +1,5 @@
 const nCentSDK = require('../../source/ncentSDK.js');
-const sdk = new nCentSDK();
+const sdk = new nCentSDK("http://localhost:8010/api");
 
 const INIT_WALLET_BALANCE = 10000;
 const TRANSFER_AMOUNT = 10;

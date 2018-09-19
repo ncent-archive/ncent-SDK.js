@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/ncent/ncent-SDK.js.git",
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "moxios": "^0.4.0"
   }
 }
