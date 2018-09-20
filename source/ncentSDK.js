@@ -93,7 +93,6 @@ class ncentSDK {
   async shareChallenge(senderKeyPair, transactionUuid, toAddress) {
     const privKey = senderKeyPair._secretKey;
     const messageObj = {
-      amount,
       fromAddress: senderKeyPair.publicKey(),
       toAddress
     };
