@@ -3,7 +3,7 @@ const nCentSDK = require("../source/ncentSDK");
 
 const sdk = new nCentSDK("http://localhost:8010/api");
 
-const TOKEN_NAME = "aaasa"; // MUST BE UNIQUE
+const TOKEN_NAME = "TokenName"; // MUST BE UNIQUE
 const TOKEN_COUNT = 10000;
 const EXPIRATION_YEAR = "2021";
 

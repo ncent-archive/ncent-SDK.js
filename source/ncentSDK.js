@@ -30,7 +30,7 @@ class ncentSDK {
 
   // getWalletBalance retrieves a publicKey's balance of a TokenType
   // (string) publicKey: public key of a wallet
-  // (string) tokenTypeUuid: UUID of a TokenType
+  // (string) tokenTypeUuid: UUID of a stamped TokenType
   async getWalletBalance(publicKey, tokenTypeUuid) {
     return await axios.get(
       `${this._net}/wallets/${publicKey}/${tokenTypeUuid}`
@@ -41,7 +41,7 @@ class ncentSDK {
   // (string) publicKey: public key of wallet stamping token
   // (string) tokenName: Name of token the user wants to create.
   // (int) totalTokens: number of tokens to create.
-  // (date) expiryDate: Date of expiration for token.)
+  // (date) expiryDate: Date of expiration for token.
   async stampToken(publicKey, tokenName, totalTokens, expiryDate) {
     return await axios.post(`${this._net}/tokentypes`, {
       sponsorUuid: publicKey,
