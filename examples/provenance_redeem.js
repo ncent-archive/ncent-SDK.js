@@ -1,7 +1,7 @@
-// const nCentSDK = require('ncent-sandbox-sdk');
 const nCentSDK = require("../source/ncentSDK");
+// const nCentSDK = require('ncent-sandbox-sdk');
 
-const sdk = new nCentSDK("http://localhost:8010/api");
+const sdk = new nCentSDK();
 
 const TOKEN_NAME = "TokenName"; // MUST BE UNIQUE
 const TOKEN_COUNT = 10000;
