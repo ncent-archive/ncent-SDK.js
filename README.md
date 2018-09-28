@@ -14,19 +14,19 @@ It provides:
 - a networking layer for endpoints on the back-end API.
 - eventual facilities for building and signing transactions, for communicating with the backend API, and for submitting transactions or querying network history.
 
-In our initial version, we will provide support for:
-
  * [createWalletAddress](#createwalletaddress)
- * [transferTokens](#transfertokens)
- * [getAllBalances](#getallbalances)
- * [getTokenBalance](#gettokenbalance)
- * [destroyTokens](#destroytokens)
- * [stampToken](#stamptoken)
-
- In our next version, there will be support for
- - getAllTransactionHistory
- - getTokenTransactionHistory
- - redeemToken
+ * [getWallets](#getwallets)
+ * [getWallet](#getwallet)
+ * [getWalletBalance](#getwalletbalance)
+ * [getTokenTypes](#gettokentypes)
+ * [stampToken](#createwalletaddress)
+ * [getTokenTypeData](#gettokentypedata)
+ * [getTransactions](#gettransactions)
+ * [createChallenge](#createchallenge)
+ * [shareChallenge](#sharechallenge)
+ * [redeemChallenge](#redeemchallenge)
+ * [redeemProvenanceChain](#retrieveprovenancechain)
+ * [redeemProvenanceChainFIFO](#retrieveprovenancechainfifo)
 
 
 ## Install
@@ -37,12 +37,10 @@ In our initial version, we will provide support for:
   npm i ncent-sandbox-sdk
   ```
 
-2. require/import it in your JavaScript:
+2. require/import it:
   ```js
   const nCentSDK = require('ncent-sandbox-sdk');
   ```
-
-In the event the above does not work, please contact us to get help resolving your issue.
 
 
 ### To develop and test the SDK:
@@ -59,19 +57,17 @@ In the event the above does not work, please contact us to get help resolving yo
   npm install
   ```
 
-
-
 # Documentation
 
 ## Constructor
 #### `new ncentSDK(ip_address)`
 
 ### Description:
-Create an instance of the nCent SDK class, specifying the location API with which you will communicate.  
+Create an instance of the nCent SDK class, specifying the IP of the Sandbox instance with which you will communicate.  
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
-ip_address | String | Network on which to connect to the API. If running locally use ajsdlf, to connect to the server nCent is running, use ajsdf;aksjdf
+ip_address | String | Network on which to connect to the API. This defaults to the IP of the Sandbox hosted on AWS. If you are running the sandbox locally, pass `http://localhost:8010/api`
 
 <br />
 
@@ -82,11 +78,18 @@ ip_address | String | Network on which to connect to the API. If running locally
 ## Methods
 
  * [createWalletAddress](#createwalletaddress)
- * [transferTokens](#transfertokens)
- * [getAllBalances](#getallbalances)
- * [getTokenBalance](#gettokenbalance)
- * [destroyTokens](#destroytokens)
- * [stampToken](#stamptoken)
+ * [getWallets](#getwallets)
+ * [getWallet](#getwallet)
+ * [getWalletBalance](#getwalletbalance)
+ * [getTokenTypes](#gettokentypes)
+ * [stampToken](#createwalletaddress)
+ * [getTokenTypeData](#gettokentypedata)
+ * [getTransactions](#gettransactions)
+ * [createChallenge](#createchallenge)
+ * [shareChallenge](#sharechallenge)
+ * [redeemChallenge](#redeemchallenge)
+ * [redeemProvenanceChain](#retrieveprovenancechain)
+ * [redeemProvenanceChainFIFO](#retrieveprovenancechainfifo)
 
 <br />
 
@@ -97,79 +100,48 @@ ip_address | String | Network on which to connect to the API. If running locally
 ### `createWalletAddress`
 ##### `createWalletAddress()`
 ### Description:
-Create a KeyPair object.
+Creates a KeyPair object.
 ### Parameters:
 None
-### Returns:
-A Keypair object similar to the [Stellar Keypair object](https://stellar.github.io/js-stellar-sdk/Keypair.html#.random).
 
 - - - -
 <br />
 
 - - - -
-
-### `transferTokens`
-##### `transferTokens(sender_KeyPair, receiver_public, tokentype_id, tokenAmount, resolve, reject)`
+### `getWallets`
+##### `getWallets()`
 ### Description:
-Transfer tokens of a specific type from one wallet to another.
+Retrieves all wallets
 ### Parameters:
-Name  | Type | Description
---- | --- | ---
-sender_KeyPair | Keypair Object | A Stellar KeyPair object with a valid public/private key pair. Can come from the nCentSDK or StellarSDK
-receiver_public | String | The public key of the receiver. A valid Base32 Stellar private key. Eg: receiver_keypair.publicKey()
-tokentype_id | String | id representing the Stamped TokenType to be transfered
-tokenAmount | int | Integer representing the number of tokens to be transfered
-resolve | callback | Function called on success
-reject | callback | Function called on error
+None
 
 - - - -
 <br />
 
 - - - -
-
-### `getAllBalances`
-##### `getAllBalances(walletAddress, resolve, reject)`
+### `getWallet`
+##### `getWallet(publicKey)`
 ### Description:
-Retrieve all token balances for a specific wallet address.
+Retrieves a specific wallet
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
-walletAddress | String | Valid wallet public key
-resolve | callback | Function called on success
-reject | callback | Function called on error
+publicKey | String | Valid public key associated with a wallet
 
 - - - -
 <br />
 
 - - - -
-
-### `getTokenBalance`
-##### `getTokenBalance(walletAddress, tokentype_id, resolve, reject)`
+### `getWalletBalance`
+##### `getWalletBalance(publicKey, tokenTypeUuid)`
 ### Description:
-Retrieve all token balances for a specific wallet address.
+Retrieves a specific wallet's balance of a stamped TokenType
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
-walletAddress | String | Valid wallet public key
-resolve | callback | Function called on success
-reject | callback | Function called on error
+publicKey | String | Valid public key associated with a wallet
+tokenTypeUuid | String | UUID of a stamped TokenType
 
-- - - -
-<br />
-
-- - - -
-
-### `destroyTokens`
-##### `destroyTokens(tokentype_id, resolve, reject)`
-### Description:
-"Removes" all tokens of a given type from circulation.
-Note: For development version of the SDK, sets expiration date of these tokens to the current time, which effectively makes them useless, but we still allow transfer and posession of expired tokens.
-### Parameters:
-Name  | Type | Description
---- | --- | ---
-tokentype_id | String | Valid id of a given token type.
-resolve | callback | Function called on success
-reject | callback | Function called on error
 
 - - - -
 <br />
@@ -177,66 +149,127 @@ reject | callback | Function called on error
 - - - -
 
 ### `stampToken`
-##### `stampToken(walletAddress, tokenName, numTokens, ExpiryDate, resolve, reject)`
+##### `stampToken(publicKey, tokenName, totalTokens, expiryDate)`
 ### Description:
-Add numTokens of a new token type to a given wallet address. Response object contains the unique tokenType Id which is necessary to know for other SDK functions.
-Note: For development, one can stamp tokens out of nothing, and thus stampTokens can be used to instantiate new ncnt tokens in a completely new  development environment. In the production version of our SDK, only existant ncnt will be allowed to be stamped into new tokens.
+Initiates a new token type and creates totalTokens amount of these tokens.
+Note: For development, one can stamp tokens out of nothing, and thus stampTokens can be used to instantiate new tokens for free. In the production version of our SDK, only ncnt will be allowed to be stamped into new tokens.
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
-walletAddress | String | Valid public key / wallet identifier to which the new stamped tokens will be added
-tokenName | String | Name of the newly stamped tokens.
-numTokens | int | Integer representing the number of tokens that will be stamped into existance
-resolve | callback | Function called on success
-reject | callback | Function called on error
+publicKey | String | public key of wallet stamping token
+tokenName | String | Name of token the user wants to create.
+numTokens | int | Number of tokens to create.
+expiryData | int | Date of expiration for token.
+
+- - - -
+<br />
+
+- - - -
+### `getTokenTypes`
+##### `getTokenTypes()`
+### Description:
+returns all TokenTypes
+### Parameters:
+none
 
 - - - -
 <br />
 
 - - - -
 
+### `getTokenTypeData`
+##### `getTokenTypeData(tokenTypeUuid)`
+### Description:
+returns data and transactions of a tokenType
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+tokenTypeUuid | String | UUID of a stamped TokenType
+
+- - - -
+<br />
+
+- - - -
+
+### `getTransactions`
+##### `getTransactions`
+### Description:
+returns all Transactions
+### Parameters:
+none
+
+- - - -
+<br />
+
+- - - -
+### `createChallenge`
+##### `createChallenge(senderKeyPair, tokenTypeUUid, amount)`
+### Description:
+Allows a TokenType sponsor to create a challenge. This challenge can be transferred to other wallets as a transaction
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+senderKeyPair | stellarKeyPair | Sender wallet with secretKey and public key
+tokenTypeUuid | String | UUID of owned TokenType
+amount | Integer | designated count of tokens to issue as part of challenge
+- - - -
+<br />
+
+- - - -
+### `shareChallenge`
+##### `shareChallenge(senderKeyPair, transactionUuid, toAddress)`
+### Description:
+Allows the owner of a challenge (transaction) to transfer it
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+senderKeyPair | stellarKeyPair | Sender wallet with secretKey and public key
+transactionUuid | String | UUID of owned transaction (challenge)
+toAddress | String | public key to transfer ownership of challenge to
+- - - -
+<br />
+
+- - - -
+### `redeemChallenge`
+##### `redeemChallenge(ownerKeyPair, transactionUuid)`
+### Description:
+Allows the owner of a TokenType to trigger redemption. This will create a transaction between the current challenge owner and Token Graveyard.
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+ownerKeyPair | stellarKeyPair | Owner wallet with secretKey and public key
+transactionUuid | String | UUID of owned transaction (challenge)
+- - - -
+<br />
+
+- - - -
+### `retrieveProvenanceChain`
+##### `retrieveProvenanceChain(transactionUuid)`
+### Description:
+Gets the parents of a transaction recursively
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+transactionUuid | String | UUID of a transaction (challenge)
+- - - -
+<br />
+
+- - - -
+### `retrieveProvenanceChainFIFO`
+##### `retrieveProvenanceChainFIFO(tokenTypeUUid, publicKey)`
+### Description:
+Gets the provenance of the oldest received transaction (challenge) of a specific TokenType that has not been shared. 
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+publicKey| String | valid wallet public key
+tokenTypeUuid | String | UUID of a stamped TokenType
+- - - -
+<br />
+
+- - - -
 ## Usage
-``` javascript
-// Import the SDK
-const mySDK = require('ncent-sandbox-sdk');
-
-// Create a new instance, using a local instance of the API
-sdk = new mySDK();
-
-// Define default callback functions
-function defaultResolve(response) {
-    console.log(response.data);
-}
-function defaultReject(error) {
-    console.log(error.data);
-}
-
-// generate keypairs
-const keypair1 = sdk.createWalletAddress();
-const keypair2 = sdk.createWalletAddress();
-
-
-let token_id;
-
-// For your first async SDK call, wrap it in a promise.
-// Then, you can chain other async calls
-//
-// In this example, we initialize some tokens with stampToken,
-// retrieve the token_id, and transfer tokens between wallets.
-new Promise(function(resolve, reject) {
-    return sdk.stampToken(keypair1.publicKey(), 'jobCent', 1000000, '2021', resolve, reject);
-})
-.then(function(response) {
-    console.log(response.data);
-    token_id = response.data["token"]["uuid"];
-})
-.then(function() {
-    return sdk.transferTokens(keypair1, keypair2.publicKey(), token_id, 10, defaultResolve, defaultReject);
-})
-.catch(function(error) {
-    console.log(error);
-})
-```
+Check the [examples](./examples) folder for usage examples.
 
 ## Contributing
 For information on how to contribute, please email kk@ncnt.io, mb@ncnt.io, or af@ncnt.io

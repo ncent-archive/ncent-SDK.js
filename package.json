@@ -1,40 +1,32 @@
 {
-  "name": "ncent-sdk-public",
-  "version": "1.2.3",
-  "description": "",
-  "main": "source/index.js",
+  "name": "ncent-sandbox-sdk",
+  "version": "1.2.4",
+  "description": "nCent Sandbox SDK",
+  "main": "source/ncentSDK.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ncent/ncent.github.io.git"
+    "url": "https://github.com/ncent/ncent-SDK.js.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "nCent",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "body-parser": "^1.18.3",
-    "es6-promise": "^4.2.4",
-    "express": "^4.16.3",
-    "jquery": "^3.3.1",
-    "morgan": "^1.9.0",
-    "pg": "^7.4.3",
-    "pg-hstore": "^2.3.2",
-    "request": "^2.81.0",
-    "sequelize": "^4.37.10",
     "stellar-sdk": "^0.10.2",
     "tweetnacl": "^1.0.0",
-    "tweetnacl-util": "^0.15.0",
-    "user": "0.0.0",
-    "webpack": "^4.15.1"
+    "tweetnacl-util": "^0.15.0"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "./test/config.js",
+    "verbose": true
+  },
+  "homepage": "https://github.com/ncent/ncent-SDK.js.git",
   "devDependencies": {
-    "nodemon": "^1.17.5",
-    "sequelize-cli": "^4.0.0"
-  },
-  "homepage": "https://github.com/ncent/ncent.github.io"
+    "jest": "^23.6.0",
+    "moxios": "^0.4.0"
+  }
 }
