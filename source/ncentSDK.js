@@ -13,8 +13,7 @@ class ncentSDK {
   // createWalletAddress creates a new wallet for the user.
   // this presently relies upon Stellar's Keypair.random
   createWalletAddress() {
-    let keyPair = StellarSdk.Keypair.random();
-    return keyPair;
+    return StellarSdk.Keypair.random();
   }
 
   // getWallets returns all wallets
@@ -72,16 +71,18 @@ class ncentSDK {
   // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
   // (string) tokenTypeUuid: UUID of owned TokenType
   // (int) amount: designated count of tokens to issue as part of challenge
-  async createChallenge(senderKeyPair, tokenTypeUUid, amount) {
+  async createChallenge(senderKeyPair, name, expiration, tokenTypeUuid, rewardAmount) {
     const pubKey = senderKeyPair.publicKey();
     const privKey = senderKeyPair._secretKey;
     const messageObj = {
-      amount
+      name,
+      expiration,
+      tokenTypeUuid,
+      rewardAmount
     };
-    const signed = signObject(messageObj, privKey);
-    messageObj.signed = signed;
+    messageObj.signed = signObject(messageObj, privKey);
     return(
-      await axios.post(`${this._net}/transactions/${tokenTypeUUid}/${pubKey}`,
+      await axios.post(`${this._net}/challenges/${pubKey}`,
       messageObj
     ));
   }
@@ -90,16 +91,15 @@ class ncentSDK {
   // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
   // (string) transactionUuid: UUID of owned transaction (challenge)
   // (string) toAddress: public key to transfer ownership of challenge to
-  async shareChallenge(senderKeyPair, transactionUuid, toAddress) {
+  async shareChallenge(senderKeyPair, challengeUuid, toAddress) {
     const privKey = senderKeyPair._secretKey;
     const messageObj = {
       fromAddress: senderKeyPair.publicKey(),
       toAddress
     };
-    const signed = signObject(messageObj, privKey);
-    messageObj.signed = signed;
+    messageObj.signed = signObject(messageObj, privKey);
     return(
-      await axios.post(`${this._net}/transactions/${transactionUuid}`,
+      await axios.post(`${this._net}/transactions/${challengeUuid}`,
       messageObj
     ));
   }
@@ -110,8 +110,7 @@ class ncentSDK {
   async redeemChallenge(ownerKeyPair, transactionUuid) {
     const privKey = ownerKeyPair._secretKey;
     const messageObj = { transactionUuid };
-    const signed = signObject(messageObj, privKey);
-    messageObj.signed = signed;
+    messageObj.signed = signObject(messageObj, privKey);
     return(
       await axios.post(`${this._net}/transactions/redeem`,
       messageObj
