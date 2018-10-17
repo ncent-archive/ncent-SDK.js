@@ -85,7 +85,7 @@ describe('nCentSDK', () => {
         expect(body.totalTokens).toBe(1000);
         expect(body.expiryDate).toBe('2026');
         done();
-      })
+      });
       sdk.stampToken(publicKey, 'NAME', 1000, '2026');
     });
   });
