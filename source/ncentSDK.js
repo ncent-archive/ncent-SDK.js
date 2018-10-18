@@ -71,15 +71,16 @@ class ncentSDK {
   // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
   // (string) tokenTypeUuid: UUID of owned TokenType
   // (int) amount: designated count of tokens to issue as part of challenge
-  async createChallenge(senderPublicKey, senderPrivateKey, name, expiration, tokenTypeUuid, rewardAmount) {
+  async createChallenge(senderKeypair, name, expiration, tokenTypeUuid, rewardAmount) {
     const messageObj = {
-      rewardAmount
+      rewardAmount,
+      name,
+      expiration,
+      tokenTypeUuid
     };
-    const signed = signObject(messageObj, senderPrivateKey);
-    messageObj.signed = signed;
-    messageObj.name = name;
-    messageObj.expiration = expiration;
-    messageObj.tokenTypeUuid = tokenTypeUuid;
+    const senderPublicKey = senderKeypair.publicKey();
+    const senderPrivateKey = senderKeypair._secretKey;
+    messageObj.signed = signObject(messageObj, senderPrivateKey);
     return(
       await axios.post(`${this._net}/challenges/${senderPublicKey}`,
       messageObj
@@ -90,13 +91,14 @@ class ncentSDK {
   // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
   // (string) transactionUuid: UUID of owned transaction (challenge)
   // (string) toAddress: public key to transfer ownership of challenge to
-  async shareChallenge(senderPublicKey, senderPrivateKey, challengeUuid, toAddress) {
+  async shareChallenge(senderKeypair, challengeUuid, toAddress) {
+    const senderPublicKey = senderKeypair.publicKey();
+    const senderPrivateKey = senderKeypair._secretKey;
     const messageObj = {
       fromAddress: senderPublicKey,
       toAddress
     };
-    const signed = signObject(messageObj, senderPrivateKey);
-    messageObj.signed = signed;
+    messageObj.signed = signObject(messageObj, senderPrivateKey);
     return(
       await axios.post(`${this._net}/transactions/${challengeUuid}`,
       messageObj
@@ -106,10 +108,10 @@ class ncentSDK {
   // redeemChallenge allows the owner of a TokenType to trigger redemption
   // (stellarKeyPair) ownerKeyPair: keypair of TokenType creator
   // (string) transactionUuid: UUID of owned transaction (challenge)
-  async redeemChallenge(ownerPrivateKey, transactionUuid) {
+  async redeemChallenge(ownerKeypair, transactionUuid) {
+    const ownerPrivateKey = ownerKeypair._secretKey;
     const messageObj = { transactionUuid };
-    const signed = signObject(messageObj, ownerPrivateKey);
-    messageObj.signed = signed;
+    messageObj.signed = signObject(messageObj, ownerPrivateKey);
     return(
       await axios.post(`${this._net}/transactions/redeem`,
       messageObj
