@@ -127,6 +127,17 @@ class ncentSDK {
     return axios.get(`${this._net}/transactions/${tokenTypeUUid}/${publicKey}`);
   }
 
+  // retrieves all challenges sponsored by a wallet address
+  // (string) publicKey: valid wallet public key
+  async retrieveSponsoredChallenges(publicKey) {
+    return axios.get(`${this._net}/challenges/sponsoredChallenges/${publicKey}`);
+  }
+
+  // retrieves all challenges held (but not sponsored) by a wallet address
+  // (string) publicKey: valid wallet public key
+  async retrieveHeldChallenges(publicKey) {
+    return axios.get(`${this._net}/challenges/heldChallenges/${publicKey}`);
+  }
 }
 
 
