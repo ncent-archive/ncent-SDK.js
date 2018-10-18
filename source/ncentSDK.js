@@ -78,7 +78,8 @@ class ncentSDK {
       tokenTypeUuid,
       rewardAmount
     };
-    messageObj.signed = signObject(messageObj, senderPrivateKey);
+    const signed = signObject(messageObj, senderPrivateKey);
+    messageObj.signed = signed;
     return(
       await axios.post(`${this._net}/challenges/${senderPublicKey}`,
       messageObj
@@ -94,7 +95,8 @@ class ncentSDK {
       fromAddress: senderPublicKey,
       toAddress
     };
-    messageObj.signed = signObject(messageObj, senderPrivateKey);
+    const signed = signObject(messageObj, senderPrivateKey);
+    messageObj.signed = signed;
     return(
       await axios.post(`${this._net}/transactions/${challengeUuid}`,
       messageObj
@@ -106,7 +108,8 @@ class ncentSDK {
   // (string) transactionUuid: UUID of owned transaction (challenge)
   async redeemChallenge(ownerPrivateKey, transactionUuid) {
     const messageObj = { transactionUuid };
-    messageObj.signed = signObject(messageObj, ownerPrivateKey);
+    const signed = signObject(messageObj, senderPrivateKey);
+    messageObj.signed = signed;
     return(
       await axios.post(`${this._net}/transactions/redeem`,
       messageObj
