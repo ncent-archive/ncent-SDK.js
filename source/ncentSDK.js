@@ -71,18 +71,16 @@ class ncentSDK {
   // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
   // (string) tokenTypeUuid: UUID of owned TokenType
   // (int) amount: designated count of tokens to issue as part of challenge
-  async createChallenge(senderKeyPair, name, expiration, tokenTypeUuid, rewardAmount) {
-    const pubKey = senderKeyPair.publicKey();
-    const privKey = senderKeyPair._secretKey;
+  async createChallenge(senderPublicKey, senderPrivateKey, name, expiration, tokenTypeUuid, rewardAmount) {
     const messageObj = {
       name,
       expiration,
       tokenTypeUuid,
       rewardAmount
     };
-    messageObj.signed = signObject(messageObj, privKey);
+    messageObj.signed = signObject(messageObj, senderPrivateKey);
     return(
-      await axios.post(`${this._net}/challenges/${pubKey}`,
+      await axios.post(`${this._net}/challenges/${senderPublicKey}`,
       messageObj
     ));
   }
@@ -91,13 +89,12 @@ class ncentSDK {
   // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
   // (string) transactionUuid: UUID of owned transaction (challenge)
   // (string) toAddress: public key to transfer ownership of challenge to
-  async shareChallenge(senderKeyPair, challengeUuid, toAddress) {
-    const privKey = senderKeyPair._secretKey;
+  async shareChallenge(senderPublicKey, senderPrivateKey, challengeUuid, toAddress) {
     const messageObj = {
-      fromAddress: senderKeyPair.publicKey(),
+      fromAddress: senderPublicKey,
       toAddress
     };
-    messageObj.signed = signObject(messageObj, privKey);
+    messageObj.signed = signObject(messageObj, senderPrivateKey);
     return(
       await axios.post(`${this._net}/transactions/${challengeUuid}`,
       messageObj
@@ -107,10 +104,9 @@ class ncentSDK {
   // redeemChallenge allows the owner of a TokenType to trigger redemption
   // (stellarKeyPair) ownerKeyPair: keypair of TokenType creator
   // (string) transactionUuid: UUID of owned transaction (challenge)
-  async redeemChallenge(ownerKeyPair, transactionUuid) {
-    const privKey = ownerKeyPair._secretKey;
+  async redeemChallenge(ownerPrivateKey, transactionUuid) {
     const messageObj = { transactionUuid };
-    messageObj.signed = signObject(messageObj, privKey);
+    messageObj.signed = signObject(messageObj, ownerPrivateKey);
     return(
       await axios.post(`${this._net}/transactions/redeem`,
       messageObj
