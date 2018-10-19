@@ -108,9 +108,9 @@ class ncentSDK {
   // redeemChallenge allows the owner of a TokenType to trigger redemption
   // (stellarKeyPair) ownerKeyPair: keypair of TokenType creator
   // (string) transactionUuid: UUID of owned transaction (challenge)
-  async redeemChallenge(ownerKeypair, transactionUuid) {
+  async redeemChallenge(ownerKeypair, challengeUuid) {
     const ownerPrivateKey = ownerKeypair._secretKey;
-    const messageObj = { transactionUuid };
+    const messageObj = { challengeUuid };
     messageObj.signed = signObject(messageObj, ownerPrivateKey);
     return(
       await axios.post(`${this._net}/transactions/redeem`,
