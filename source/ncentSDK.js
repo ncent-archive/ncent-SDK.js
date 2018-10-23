@@ -87,6 +87,10 @@ class ncentSDK {
     ));
   }
 
+  async retrieveChallenge(challengeUuid) {
+    return await axios.get(`${this._net}/challenges/${challengeUuid}`);
+  }
+
   // shareChallenge allows the owner of a challenge (transaction) to transfer it
   // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
   // (string) transactionUuid: UUID of owned transaction (challenge)
