@@ -8,11 +8,9 @@
 
 ## Overview
 
-ncentSDK is a Javascript library for communicating with the nCent API. It is used for building nCent applications either on Node.js or in the browser, as well as for accessing base-level features on the API.
+ncentSDK is a Javascript library built for developers to easily integrate their applications with the nCent API and Sandbox test environment. It provides the tools for building and signing transactions, communicating with the backend API, and submitting transactions or querying network history.
 
-It provides:
-- a networking layer for endpoints on the back-end API.
-- eventual facilities for building and signing transactions, for communicating with the backend API, and for submitting transactions or querying network history.
+This documentation is meant to serve as a guide for developers to understand all of the functionality available in the SDK.
 
  * [createWalletAddress](#createwalletaddress)
  * [getWallets](#getwallets)
@@ -45,7 +43,7 @@ It provides:
 
 ### To develop and test the SDK:
 
-1. Clone the repo:
+1. Clone the repository:
 
   ```shell
   git clone https://github.com/ncent/ncent-SDK.js
@@ -67,7 +65,7 @@ Create an instance of the nCent SDK class, specifying the IP of the Sandbox inst
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
-ip_address | String | Network on which to connect to the API. This defaults to the IP of the Sandbox hosted on AWS. If you are running the sandbox locally, pass `http://localhost:8010/api`
+ip_address | String | Network on which to connect to the API. This defaults to the IP of the Sandbox hosted on AWS ECS. If you are running the sandbox locally, pass `http://localhost:8010/api`
 
 <br />
 
@@ -86,10 +84,13 @@ ip_address | String | Network on which to connect to the API. This defaults to t
  * [getTokenTypeData](#gettokentypedata)
  * [getTransactions](#gettransactions)
  * [createChallenge](#createchallenge)
+ * [retrieveChallenge](#retrievechallenge)
  * [shareChallenge](#sharechallenge)
  * [redeemChallenge](#redeemchallenge)
  * [redeemProvenanceChain](#retrieveprovenancechain)
  * [redeemProvenanceChainFIFO](#retrieveprovenancechainfifo)
+ * [retrieveSponsoredChallenges](#retirevesponsoredchallenges)
+ * [retrieveHeldChallenges](#retrieveheldchallenges)
 
 <br />
 
@@ -203,42 +204,56 @@ none
 
 - - - -
 ### `createChallenge`
-##### `createChallenge(senderKeyPair, tokenTypeUUid, amount)`
+##### `createChallenge(senderKeyPair, name, expiration, tokenTypeUUid, rewardAmount)`
 ### Description:
-Allows a TokenType sponsor to create a challenge. This challenge can be transferred to other wallets as a transaction
+Allows a sponsor to create a challenge. This challenge can be transferred to other wallets via a transaction
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
 senderKeyPair | stellarKeyPair | Sender wallet with secretKey and public key
+name | String | the name of the challenge to be created
+expiration | Date | the expiration date of the challenge
 tokenTypeUuid | String | UUID of owned TokenType
-amount | Integer | designated count of tokens to issue as part of challenge
+rewardAmount | Integer | designated number of tokens to reward for the completion of the challenge
+- - - -
+<br />
+
+- - - -
+### `retrieveChallenge`
+##### `retrieveChallenge(challengeUuid)`
+### Description:
+Retrieves data for a specific challenge
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+challengeUuid | String | UUID of a specific challenge
 - - - -
 <br />
 
 - - - -
 ### `shareChallenge`
-##### `shareChallenge(senderKeyPair, transactionUuid, toAddress)`
+##### `shareChallenge(senderKeyPair, challengeUuid, toAddress)`
 ### Description:
-Allows the owner of a challenge (transaction) to transfer it
+Allows the current holder of a challenge to transfer it
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
 senderKeyPair | stellarKeyPair | Sender wallet with secretKey and public key
-transactionUuid | String | UUID of owned transaction (challenge)
+challengeUuid | String | UUID of the challenge
 toAddress | String | public key to transfer ownership of challenge to
 - - - -
 <br />
 
 - - - -
 ### `redeemChallenge`
-##### `redeemChallenge(ownerKeyPair, transactionUuid)`
+##### `redeemChallenge(ownerKeyPair, challengeUuid)`
 ### Description:
-Allows the owner of a TokenType to trigger redemption. This will create a transaction between the current challenge owner and Token Graveyard.
+Allows the sponsor of a challenge to trigger redemption. This will create a transaction between the current challenge holder and Token Graveyard.
 ### Parameters:
 Name  | Type | Description
 --- | --- | ---
-ownerKeyPair | stellarKeyPair | Owner wallet with secretKey and public key
-transactionUuid | String | UUID of owned transaction (challenge)
+ownerKeyPair | stellarKeyPair | Sponsor wallet with secretKey and public key
+challengeUuid | String | UUID of the challenge to be redeemed
 - - - -
 <br />
 
@@ -268,13 +283,34 @@ tokenTypeUuid | String | UUID of a stamped TokenType
 <br />
 
 - - - -
+### `retrieveSponsoredChallenges`
+##### `retrieveSponsoredChallenges(publicKey)`
+### Description:
+Retrieves all challenges (and their data) that have been sponsored by the public key provided 
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+publicKey| String | valid wallet public key
+- - - -
+<br />
+
+- - - -
+### `retrieveHeldChallenges`
+##### `retrieveHeldChallenges(publicKey)`
+### Description:
+Retrieves all challenges (and their data) that are currently in the possession of the public key provided 
+### Parameters:
+Name  | Type | Description
+--- | --- | ---
+publicKey| String | valid wallet public key
+- - - -
+<br />
+
+- - - -
 ## Usage
 Check the [examples](./examples) folder for usage examples.
 
 ## Contributing
-For information on how to contribute, please email kk@ncnt.io, mb@ncnt.io, or af@ncnt.io
-
-## License
-SDK is licensed under ...
+For information on how to contribute, please email kk@ncnt.io
 
 ------------
