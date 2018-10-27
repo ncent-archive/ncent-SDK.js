@@ -3,7 +3,7 @@ const StellarSdk = require('stellar-sdk');
 const signObject = require('./utils').signObject;
 
 // const defaultNet = 'http://localhost:8010/api';
-const defaultNet = "http://18.223.237.17:8010/api";
+const defaultNet = "http://18.219.110.45:8010/api";
 
 class ncentSDK {
   constructor(net = defaultNet) {
