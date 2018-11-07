@@ -71,14 +71,17 @@ class ncentSDK {
     // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
     // (string) tokenTypeUuid: UUID of owned TokenType
     // (int) amount: designated count of tokens to issue as part of challenge
-    async createChallenge(senderKeypair, name, description, imageUrl, expiration, tokenTypeUuid, rewardAmount) {
+    async createChallenge(senderKeypair, name, description, imageUrl, expiration, tokenTypeUuid, rewardAmount, rewardType, maxShares, maxRedemptions) {
         const messageObj = {
             rewardAmount,
             name,
             description,
             imageUrl,
             expiration,
-            tokenTypeUuid
+            tokenTypeUuid,
+            rewardType,
+            maxShares,
+            maxRedemptions
         };
         const senderPublicKey = senderKeypair.publicKey();
         const senderPrivateKey = senderKeypair._secretKey;
@@ -97,12 +100,13 @@ class ncentSDK {
     // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
     // (string) transactionUuid: UUID of owned transaction (challenge)
     // (string) toAddress: public key to transfer ownership of challenge to
-    async shareChallenge(senderKeypair, challengeUuid, toAddress) {
+    async shareChallenge(senderKeypair, challengeUuid, toAddress, numShares) {
         const senderPublicKey = senderKeypair.publicKey();
         const senderPrivateKey = senderKeypair._secretKey;
         const messageObj = {
             fromAddress: senderPublicKey,
-            toAddress
+            toAddress,
+            numShares
         };
         messageObj.signed = signObject(messageObj, senderPrivateKey);
         return (
