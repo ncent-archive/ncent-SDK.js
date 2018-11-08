@@ -138,8 +138,8 @@ class ncentSDK {
     // transaction of a specific TokenType
     // (string) transactionUuid: UUID of a transaction
     // (string) publicKey: valid wallet public key
-    async retrieveProvenanceChainFIFO(tokenTypeUUid, publicKey) {
-        return axios.get(`${this._net}/transactions/${tokenTypeUUid}/${publicKey}`);
+    async retrieveProvenanceChainFIFO(challengeUuid, publicKey) {
+        return axios.get(`${this._net}/transactions/${challengeUuid}/${publicKey}`);
     }
 
     // retrieves all challenges sponsored by a wallet address
