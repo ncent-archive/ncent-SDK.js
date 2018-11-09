@@ -139,23 +139,23 @@ class ncentSDK {
     // (string) transactionUuid: UUID of a transaction
     // (string) publicKey: valid wallet public key
     async retrieveProvenanceChainFIFO(challengeUuid, publicKey) {
-        return axios.get(`${this._net}/transactions/${challengeUuid}/${publicKey}`);
+        return await axios.get(`${this._net}/transactions/${challengeUuid}/${publicKey}`);
     }
 
     // retrieves all challenges sponsored by a wallet address
     // (string) publicKey: valid wallet public key
     async retrieveSponsoredChallenges(publicKey) {
-        return axios.get(`${this._net}/challenges/sponsoredChallenges/${publicKey}`);
+        return await axios.get(`${this._net}/challenges/sponsoredChallenges/${publicKey}`);
     }
 
     // retrieves all challenges held (but not sponsored) by a wallet address
     // (string) publicKey: valid wallet public key
     async retrieveHeldChallenges(publicKey) {
-        return axios.get(`${this._net}/challenges/heldChallenges/${publicKey}`);
+        return await axios.get(`${this._net}/challenges/heldChallenges/${publicKey}`);
     }
 
     async retrieveLeafNodeTransactions(challengeUuid) {
-        return axios.get(`${this._net}/challenges/leafNodes/${challengeUuid}`);
+        return await axios.get(`${this._net}/challenges/leafNodes/${challengeUuid}`);
     }
 }
 
