@@ -159,6 +159,10 @@ class ncentSDK {
     async retrieveLeafNodeTransactions(challengeUuid) {
         return await axios.get(`${this._net}/challenges/leafNodes/${challengeUuid}`);
     }
+
+    async retrieveAllChallengeBalances(challengeUuid) {
+        return await axios.get(`${this._net}/challenges/balances/${challengeUuid}`);
+    }
 }
 
 
