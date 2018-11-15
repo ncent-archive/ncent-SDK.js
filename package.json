@@ -1,6 +1,6 @@
 {
   "name": "ncent-sandbox-sdk",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "nCent Sandbox SDK",
   "main": "source/ncentSDK.js",
   "scripts": {
