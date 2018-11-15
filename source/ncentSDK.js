@@ -71,7 +71,7 @@ class ncentSDK {
     // (stellarKeyPair) senderKeyPair: Sender wallet with secretKey and public key
     // (string) tokenTypeUuid: UUID of owned TokenType
     // (int) amount: designated count of tokens to issue as part of challenge
-    async createChallenge(senderKeypair, name, description, company, imageUrl, participationUrl, expiration, tokenTypeUuid, rewardAmount, rewardType, maxShares, maxRedemptions) {
+    async createChallenge(senderKeypair, name, description, company, imageUrl, participationUrl, expiration, tokenTypeUuid, rewardAmount, rewardType, maxShares, maxRedemptions = 100) {
         const messageObj = {
             rewardAmount,
             name,
